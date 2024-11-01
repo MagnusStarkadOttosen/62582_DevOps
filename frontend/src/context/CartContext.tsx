@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 import { Product } from '../interface/products';
 interface CartItem {
     id: number;

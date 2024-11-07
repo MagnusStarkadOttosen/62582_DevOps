@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - feature/CI_CD
+      - develop
   pull_request:
     branches:
       - main

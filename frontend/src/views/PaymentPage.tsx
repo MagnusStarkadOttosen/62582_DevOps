@@ -72,6 +72,8 @@ const PaymentPage: React.FC = () => {
                             onChange={handleInputChange}
                             placeholder="Hans Hansen"
                             required
+                            maxLength={65}
+                            pattern="^[a-zA-Z\s]+"
                         />
                     </label>
                     <label>
@@ -83,18 +85,31 @@ const PaymentPage: React.FC = () => {
                             onChange={handleInputChange}
                             placeholder="hans@hansen.com"
                             required
+                            pattern="^[\w-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,3}$"
                         />
                     </label>
                     <label>
                         Phone Number:
-                        <input
-                            type="text"
-                            name="phoneNumber"
-                            value={billingInfo.phoneNumber}
-                            onChange={handleInputChange}
-                            placeholder="+xx xxxxxxxx"
-                            required
-                        />
+                        <div style={{display: 'flex', alignItems: 'center'}}>
+                            <span>+45</span>
+                            <input
+                                type="text"
+                                name="phoneNumber"
+                                value={billingInfo.phoneNumber}
+                                onChange={(e) => {
+                                    // Allow only digits and limit to 8 characters
+                                    const rawValue = e.target.value.replace(/\D/g, ""); // Remove non-numeric characters
+                                    if (rawValue.length <= 8) {
+                                        handleInputChange(e);
+                                    }
+                                }}
+                                placeholder="xxxxxxxx"
+                                required
+                                pattern="^[0-9]{8}$"
+                                maxLength={8}
+                                style={{marginLeft: '5px'}}
+                            />
+                        </div>
                     </label>
                 </div>
 
@@ -128,9 +143,20 @@ const PaymentPage: React.FC = () => {
                             type="text"
                             name="postcode"
                             value={billingInfo.postcode}
-                            onChange={handleInputChange}
+                            onChange={(e) => {
+                                const rawValue = (e.target as HTMLInputElement).value.replace(/\D/g, ""); // Remove non-numeric characters
+
+                                if (rawValue.length <= 4) {
+                                    setBillingInfo((prevInfo) => ({
+                                        ...prevInfo,
+                                        postcode: rawValue,
+                                    }));
+                                }
+                            }}
                             placeholder="2750"
                             required
+                            pattern="^\d{4}$"
+                            maxLength={4}
                         />
                     </label>
                     <label>
@@ -142,6 +168,7 @@ const PaymentPage: React.FC = () => {
                             onChange={handleInputChange}
                             placeholder="Ballerup"
                             required
+                            pattern="^[a-zA-ZæøåÆØÅ\s]+$"
                         />
                     </label>
                     <label>
@@ -191,9 +218,25 @@ const PaymentPage: React.FC = () => {
                                     type="text"
                                     name="cardNumber"
                                     value={paymentDetails.cardNumber}
-                                    onChange={handlePaymentDetailsChange}
+                                    onChange={(e) => {
+                                        // Removes all the non-digit characters to get the raw card number
+                                        const rawValue = e.target.value.replace(/\D/g, "");
+
+                                        // add space after every 4 digits
+                                        const formattedValue = rawValue.replace(/(\d{4})(?=\d)/g, "$1 ");
+
+                                        // Limit to 16 digits (including spaces in display)
+                                        if (formattedValue.length <= 19) {
+                                            setPaymentDetails(prevDetails => ({
+                                                ...prevDetails,
+                                                cardNumber: formattedValue,
+                                            }));
+                                        }
+                                    }}
                                     placeholder="xxxx xxxx xxxx xxxx"
                                     required
+                                    pattern="^\d{4}\s\d{4}\s\d{4}\s\d{4}$" // Pattern enforces 4-digit groups with spaces
+                                    maxLength={19} // 16 digits + 3 spaces
                                 />
                             </label>
                             <label>
@@ -205,6 +248,8 @@ const PaymentPage: React.FC = () => {
                                     onChange={handlePaymentDetailsChange}
                                     placeholder="MM/YY"
                                     required
+                                    pattern="^(0[1-9]|1[0-2])\/\d{2}$" // Month range 01-12 and 2-digit year
+                                    maxLength={5}
                                 />
                             </label>
                             <label>
@@ -213,26 +258,52 @@ const PaymentPage: React.FC = () => {
                                     type="text"
                                     name="cvv"
                                     value={paymentDetails.cvv}
-                                    onChange={handlePaymentDetailsChange}
+                                    onChange={(e) => {
+                                        // Ensure only digits are allowed and limit to 3 characters
+                                        const rawValue = (e.target as HTMLInputElement).value.replace(/\D/g, ""); // Remove any non-numeric characters
+
+                                        if (rawValue.length <= 3) {
+                                            setPaymentDetails((prevDetails) => ({
+                                                ...prevDetails,
+                                                cvv: rawValue,
+                                            }));
+                                        }
+                                    }}
                                     placeholder="xxx"
                                     required
+                                    pattern="^\d{3}$"
+                                    maxLength={3}
                                 />
                             </label>
+
                         </>
                     )}
 
                     {paymentMethod === 'mobilePay' && (
                         <label>
                             Phone Number:
-                            <input
-                                type="text"
-                                name="mobilePayPhoneNumber"
-                                value={paymentDetails.mobilePayPhoneNumber}
-                                onChange={handlePaymentDetailsChange}
-                                placeholder="+xx xxxxxxxx"
-                                required
-                            />
+                            <div style={{display: 'flex', alignItems: 'center'}}>
+                                <span>+45</span>
+                                <input
+                                    type="text"
+                                    name="mobilePayPhoneNumber"
+                                    value={paymentDetails.mobilePayPhoneNumber}
+                                    onChange={(e) => {
+                                        // Allow only digits and limit to 8 characters
+                                        const rawValue = e.target.value.replace(/\D/g, ""); // Remove any non-numeric characters
+                                        if (rawValue.length <= 8) {
+                                            handlePaymentDetailsChange(e);
+                                        }
+                                    }}
+                                    placeholder="xxxxxxxx"
+                                    required
+                                    pattern="^[0-9]{8}$"
+                                    maxLength={8}
+                                    style={{marginLeft: '5px'}}
+                                />
+                            </div>
                         </label>
+
                     )}
                 </div>
 

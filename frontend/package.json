@@ -21,9 +21,10 @@
   },
   "scripts": {
     "start": "react-scripts start",
-   "build": "react-scripts build",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "test": "react-scripts test"
+    "dev-build": "REACT_APP_ENV=development react-scripts build"
   },
   "eslintConfig": {
 

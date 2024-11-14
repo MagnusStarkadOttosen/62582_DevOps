@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Product } from '../interface/products'; // Assuming you have this interface
 import '../styles/productPage.css';
 import { useCart } from "../context/CartContext";
-import { useParams, useNavigate, Navigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 
 interface ProductPage1Props {

@@ -37,7 +37,8 @@ from flask import Flask, jsonify, send_from_directory
 import os
 
 
-app = Flask(__name__, static_folder="../frontend/build")
+app = Flask(__name__, static_folder="../../frontend/build")
+DB_PATH = os.path.join(os.path.dirname(__file__), "../../database/database.db")
 
 
 @app.route("/", defaults={"path": ""})
@@ -49,8 +50,7 @@ def serve(path):
         return send_from_directory(app.static_folder, "index.html")
 
 def connect_db():
-    conn = sqlite3.connect("../Backend/database.db")
-    return conn
+    return sqlite3.connect(DB_PATH)
 
 @app.route("/api/products", methods=["GET"])
 def get_products():

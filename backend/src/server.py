@@ -32,7 +32,8 @@ if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8000)
  """
 
-from flask import Flask, send_from_directory
+import sqlite3
+from flask import Flask, jsonify, send_from_directory
 import os
 
 
@@ -47,6 +48,24 @@ def serve(path):
     else:
         return send_from_directory(app.static_folder, "index.html")
 
+def connect_db():
+    conn = sqlite3.connect("../Backend/database.db")
+    return conn
+
+@app.route("/api/products", methods=["GET"])
+def get_products():
+    conn = connect_db()
+    cursor = conn.cursor()
+    cursor.execute("SELECT id, title, price, discountPercentage, thumbnail FROM products")
+    rows = cursor.fetchall()
+    conn.close()
+
+    # Format rows into JSON
+    products = [
+        {"id": row[0], "title": row[1], "price": row[2], "discountPercentage": row[3], "thumbnail": row[4]}
+        for row in rows
+    ]
+    return jsonify(products)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8000)

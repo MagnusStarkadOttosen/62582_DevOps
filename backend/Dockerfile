@@ -6,7 +6,7 @@ WORKDIR /app
 
 # Copy the requirements file and install dependencies
 COPY ./src ./src
-COPY ../database ../database
+COPY ./database ./database
 COPY requirements.txt  .
 
 

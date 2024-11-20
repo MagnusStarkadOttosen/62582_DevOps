@@ -24,7 +24,7 @@ const App: React.FC = () => {
   };
 
   useEffect(() => {
-    const apiUrl = process.env.REACT_APP_BACKEND_URL || "http://localhost:8000";
+    const apiUrl = process.env.REACT_APP_BACKEND_URL || "http://16.171.42.209:8000";
     fetch(`${apiUrl}/api/products`)
       .then((response) => {
         if (!response.ok) {

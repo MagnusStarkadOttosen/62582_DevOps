@@ -39,7 +39,7 @@ from flask_cors import CORS
 
 
 app = Flask(__name__, static_folder="../../frontend/build")
-CORS(app)
+CORS(app, origins=["http://16.171.42.209:3000"])
 DB_PATH = os.path.join(os.path.dirname(__file__), "../database/database.db")
 
 

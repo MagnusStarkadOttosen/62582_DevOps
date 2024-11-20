@@ -35,10 +35,12 @@ if __name__ == '__main__':
 import sqlite3
 from flask import Flask, jsonify, send_from_directory
 import os
+from flask_cors import CORS
 
 
 app = Flask(__name__, static_folder="../../frontend/build")
-DB_PATH = os.path.join(os.path.dirname(__file__), "../../database/database.db")
+CORS(app)
+DB_PATH = os.path.join(os.path.dirname(__file__), "../database/database.db")
 
 
 @app.route("/", defaults={"path": ""})

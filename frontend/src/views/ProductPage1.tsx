@@ -11,6 +11,8 @@ interface ProductPage1Props {
 }
 
 const ProductPage1: React.FC<ProductPage1Props> = ({ products }) => {
+    console.log("ProductPage1 received products:", products);
+
     const { id } = useParams<{ id: string }>();
     const [quantity, setQuantity] = useState<number>(1);
     const { addToCart } = useCart();

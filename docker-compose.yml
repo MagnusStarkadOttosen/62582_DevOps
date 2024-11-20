@@ -7,7 +7,7 @@ services:
       - "8000:8000"
     volumes:
       - ./backend:/app
-      - ./database:/app/database
+      # - ./database:/app/database
     environment:
       - FLASK_ENV=production
 
@@ -19,3 +19,5 @@ services:
       - "3000:80"
     depends_on:
       - backend
+    environment:
+      - REACT_APP_BACKEND_URL=http://backend:8000

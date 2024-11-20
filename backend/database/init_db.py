@@ -3,7 +3,7 @@ import sqlite3
 import json
 
 DB_PATH = os.path.join(os.path.dirname(__file__), "database.db")
-JSON_PATH = os.path.join(os.path.dirname(__file__), "../frontend/src/data/products.json")
+JSON_PATH = os.path.join(os.path.dirname(__file__), "../../frontend/src/data/products.json")
 
 # Create or connect to the database
 def init_db():

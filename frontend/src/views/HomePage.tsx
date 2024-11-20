@@ -11,6 +11,7 @@ interface HomePageProps {
 }
 
 const HomePage: React.FC<HomePageProps> = ({ products }) => {
+    console.log("HomePage received products:", products);
     const { addToCart } = useCart();
     const [visibleProducts, setVisibleProducts] = useState(6);
     const navigate = useNavigate();

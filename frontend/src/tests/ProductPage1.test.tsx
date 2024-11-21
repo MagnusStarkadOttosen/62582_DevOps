@@ -26,6 +26,7 @@ describe('ProductPage1 Component', () => {
         description: 'A great product for testing.',
         price: 100,
         thumbnail: 'test-thumbnail.jpg',
+        discountPercentage: 10,
     };
 
     beforeEach(() => {
@@ -42,7 +43,7 @@ describe('ProductPage1 Component', () => {
     it('renders product details correctly', () => {
         render(
             <BrowserRouter>
-                <ProductPage1 products={[]} />
+                <ProductPage1 products={[mockProduct]} />
             </BrowserRouter>
         );
 
@@ -65,7 +66,7 @@ describe('ProductPage1 Component', () => {
     it('allows quantity selection and updates state correctly', () => {
         render(
             <BrowserRouter>
-                <ProductPage1 products={[]} />
+                <ProductPage1 products={[mockProduct]} />
             </BrowserRouter>
         );
 
@@ -78,7 +79,7 @@ describe('ProductPage1 Component', () => {
     it('adds product to cart and navigates to basket page when "Add to Cart" is clicked', () => {
         render(
             <BrowserRouter>
-                <ProductPage1 products={[]} />
+                <ProductPage1 products={[mockProduct]} />
             </BrowserRouter>
         );
 

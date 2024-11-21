@@ -42,7 +42,7 @@ describe('ProductPage1 Component', () => {
     it('renders product details correctly', () => {
         render(
             <BrowserRouter>
-                <ProductPage1 products={[mockProduct]} />
+                <ProductPage1 products={[]} />
             </BrowserRouter>
         );
 
@@ -65,7 +65,7 @@ describe('ProductPage1 Component', () => {
     it('allows quantity selection and updates state correctly', () => {
         render(
             <BrowserRouter>
-                <ProductPage1 products={[mockProduct]} />
+                <ProductPage1 products={[]} />
             </BrowserRouter>
         );
 
@@ -78,7 +78,7 @@ describe('ProductPage1 Component', () => {
     it('adds product to cart and navigates to basket page when "Add to Cart" is clicked', () => {
         render(
             <BrowserRouter>
-                <ProductPage1 products={[mockProduct]} />
+                <ProductPage1 products={[]} />
             </BrowserRouter>
         );
 

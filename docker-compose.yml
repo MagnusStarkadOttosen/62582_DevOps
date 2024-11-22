@@ -1,18 +1,23 @@
-version: '3'
-
 services:
   backend:
     build:
       context: ./backend             # Path to the backend directory
-      dockerfile: Dockerfile          # Dockerfile in the backend directory
+      # dockerfile: Dockerfile          # Dockerfile in the backend directory
     ports:
       - "8000:8000"
+    volumes:
+      - ./backend:/app
+      # - ./database:/app/database
     environment:
       - FLASK_ENV=production
 
   frontend:
     build:
       context: ./frontend             # Path to the frontend directory
-      dockerfile: Dockerfile          # Dockerfile in the frontend directory
+      # dockerfile: Dockerfile          # Dockerfile in the frontend directory
     ports:
-      - "80:80"
+      - "3000:80"
+    depends_on:
+      - backend
+    environment:
+      - REACT_APP_BACKEND_URL=http://16.171.42.209:8000

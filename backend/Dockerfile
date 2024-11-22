@@ -5,11 +5,15 @@ FROM python:3.9-slim
 WORKDIR /app
 
 # Copy the requirements file and install dependencies
+COPY ./src ./src
+COPY ./database ./database
 COPY requirements.txt  .
+
+
 RUN pip install -r requirements.txt
 
 # Copy the backend code to the container
-COPY . /app
+# COPY . /app
 
 # Expose the port the app runs on
 EXPOSE 8000

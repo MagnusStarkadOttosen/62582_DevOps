@@ -15,12 +15,15 @@ COPY . .
 RUN npm run build
 
 # # Serve the static files using a lightweight server
-# FROM nginx:alpine
-# COPY --from=build /app/build /usr/share/nginx/html
-# EXPOSE 80
+FROM nginx:alpine
+COPY --from=build /app/build /usr/share/nginx/html
+EXPOSE 80
 
 # Expose the appropriate port (e.g., 3000)
-EXPOSE 3000
+# EXPOSE 3000
 
 # Run the application
-CMD ["npm", "start"]
+# CMD ["npm", "start"]
+
+# Run Nginx
+CMD ["nginx", "-g", "daemon off;"]

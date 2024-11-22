@@ -1,0 +1,37 @@
+name: Deploy to AWS EC2
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Step 2: Set up SSH to connect to EC2
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.7.0
+        with:
+          ssh-private-key: ${{ secrets.DEVOPS_AWS_SSH_KEY }}
+
+      # Step 3: Deploy the code to EC2
+      - name: Deploy to EC2
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.DEVOPS_AWS_USER}}@${{ secrets.DEVOPS_AWS_HOST }} << 'EOF'
+          # Navigate to the project directory
+          cd ~/62582_DevOps
+
+          # Pull the latest changes from the repository
+          git reset --hard
+          git pull origin main
+
+          # Rebuild and restart the Docker containers
+          docker-compose down
+          docker-compose up --build -d
+          EOF

@@ -1,0 +1,25 @@
+# Ignore Python bytecode
+__pycache__
+*.py[cod]
+*.pyo
+*.pyd
+
+# Ignore virtual environment folders
+venv
+.venv
+
+# Ignore node_modules (for frontend dependencies)
+node_modules
+
+# Ignore editor and OS-specific files
+.DS_Store
+.idea
+*.log
+
+# Ignore existing builds in frontend and backend folders
+backend/build/
+frontend/build/
+
+# Exclude .git folder and other version control metadata
+.git
+.gitignore

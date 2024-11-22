@@ -53,7 +53,7 @@ const HomePage: React.FC<HomePageProps> = ({ products }) => {
 
     return (
         <div className="homepage-container2">
-            <h1 className="homepage-title2">MegaMart this is a test</h1>
+            <h1 className="homepage-title2">MegaMart</h1>
             <div className="products-container2">
                 {products.slice(0, visibleProducts).map((product) => (
                     <div key={product.id} className="product-card2">

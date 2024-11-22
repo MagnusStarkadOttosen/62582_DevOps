@@ -26,28 +26,34 @@ const App: React.FC = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
+        console.log("Logging in to get a token...");
         const loginResponse = await fetch("http://16.171.42.209:8000/api/login", {
           method: "POST",
           headers: {"Content-Type": "application/json"},
           body: JSON.stringify({username: "admin", password: "password123"}),
         });
 
+        console.log("Login response status:", loginResponse.status);
         if (!loginResponse.ok){
           throw new Error("Login failed")
         }
 
         const loginData = await loginResponse.json();
+        console.log("Received token:", loginData.token);
         const token = loginData.token;
 
+        console.log("Fetching products with token...");
         const productsResponse = await fetch("http://16.171.42.209:8000/api/products", {
           headers: {Authorization: `Bearer ${token}`},
         });
 
+        console.log("Products response status:", productsResponse.status);
         if (!productsResponse.ok) {
           throw new Error(`Failed to fetch products: ${productsResponse.statusText}`);
         }
 
         const productsData = await productsResponse.json();
+        console.log("Fetched products:", productsData);
         setProducts(productsData);
       } catch (error) {
         console.error("Error fetching products:", error);

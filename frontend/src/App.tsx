@@ -24,25 +24,38 @@ const App: React.FC = () => {
   };
 
   useEffect(() => {
-    const apiUrl = process.env.REACT_APP_BACKEND_URL || "http://16.171.42.209:8000";
-    fetch(`${apiUrl}/api/products`)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
+    const fetchProducts = async () => {
+      try {
+        const loginResponse = await fetch("http://16.171.42.209:8000/api/login", {
+          method: "POST",
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify({username: "admin", password: "password1123"}),
+        });
+
+        if (!loginResponse.ok){
+          throw new Error("Login failed")
         }
-        console.log("API Response:", response); // Log response
-        return response.json();
-      })
-      .then((data) => {
-        console.log("Fetched Products:", data); // Log fetched data
-        setProducts(data);
-        setLoading(false);
-      })
-      .catch((error) => {
+
+        const loginData = await loginResponse.json();
+        const token = loginData.token;
+
+        const productsResponse = await fetch("http://16.171.42.209:8000/api/products", {
+          headers: {Authorization: `Bearer ${token}`},
+        });
+
+        if (!productsResponse.ok) {
+          throw new Error(`Failed to fetch products: ${productsResponse.statusText}`);
+        }
+
+        const productsData = await productsResponse.json();
+        setProducts(productsData);
+      } catch (error) {
         console.error("Error fetching products:", error);
         setError("Failed to load products.");
-        setLoading(false);
-      });
+      }
+    }
+    
+    fetchProducts();
   }, []);
 
   if (loading) {

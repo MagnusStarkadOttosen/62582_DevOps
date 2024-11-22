@@ -29,7 +29,7 @@ const App: React.FC = () => {
         const loginResponse = await fetch("http://16.171.42.209:8000/api/login", {
           method: "POST",
           headers: {"Content-Type": "application/json"},
-          body: JSON.stringify({username: "admin", password: "password1123"}),
+          body: JSON.stringify({username: "admin", password: "password123"}),
         });
 
         if (!loginResponse.ok){
